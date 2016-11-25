@@ -1,8 +1,8 @@
 {
-  "name": "canvas-frame-animation",
+  "name": "webapp-utils",
   "version": "1.0.0",
   "description": "",
-  "main": "./app/scripts/frame-player.js",
+  "main": ["./app/scripts/uutils.js", "./app/styles/orient.css"],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",

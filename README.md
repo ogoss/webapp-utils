@@ -1,8 +1,9 @@
-# CanvasFramePlayer 模块
+# webapp utils
 
 ## 使用方法
-``` javascript
-<script src="dist/frame-player.min.js"></script>
+```
+<link rel="stylesheet" href="dist/orient.min.css">
+<script src="dist/utils.min.js"></script>
 ```
 
 ## 本地测试
@@ -19,55 +20,79 @@ npm install
 npm start
 ```
 
-## 配置属性
+- 项目发布
 
-``` javascript
-framePlayer.init({
-  nodeName: '#canvas',
-  nodeClass: '',
-  width: 750,
-  height: 1207
-});
 ```
-
-- nodeName: canvas外层元素
-- nodeClass: canvas外层元素样式类名
-- width: (default: 750px) canvas宽度
-- height: (default: 1207px) canvas高度
+npm run dist
+```
 
 ## 方法调用
 
-- 加载序列帧图片
+- AJAX封装
 
 ``` javascript
 /**
- * @param {Array} frames 序列帧数组
- * @param {String} tag 序列帧索引
+ * 若未使用jQuery等库，可使用此AJAX实例
+ * @param {String} url 请求地址
+ * @param {Object} data 请求参数
+ * @param {String} type 返回值类型
+ * @param {Function} callback 回调函数
+ * @param {Boolean} [async=true] 是否异步
  */
-framePlayer.loadFrame(frames, tag);
+utils.ajax.get(url, data, type, callback, async);
+utils.ajax.post(url, data, type, callback, async);
 ```
 
-- 播放序列帧
+- 获取手机操作系统
 
 ``` javascript
 /**
- * @param {String} tag 序列帧索引
- * @param {Number} duration 持续时间，单位ms
- * @param {Number} times 动画播放次数 [times<0:无限次, times=0:不播放, times>0:播放times次]
- * @param {Function} onPlayStart 开始播放回调函数
- * @param {Function} onPlayEnd 结束播放回调函数
+ * @returns {String} ['Windows Phone' || 'Android' || 'iOS' || 'unknown']
  */
-framePlayer.play(tag, duration, times, onPlayStart, onPlayEnd);
+utils.getMobileOperatingSystem();
 ```
 
-- 清除屏幕内容
+- 队列加载图片
 
 ``` javascript
-framePlayer.clear();
+/**
+ * @param {Array} res 图片地址数组
+ * @param {Number} [start=0] 起始值
+ * @param {Number} [total=res.length] 总数
+ * @param {Function} onLoadStart 加载开始回调函数
+ * @param {Function} onLoading 加载中回调函数
+ * @param {Function} onLoadEnd 加载结束回调函数
+ */
+utils.queue(res, start, total, onLoadStart, onLoading, onLoadEnd);
 ```
 
-- 停止动画
+- 数字前补0
 
 ``` javascript
-framePlayer.stop();
+/**
+ * @param {Number} num 需要补齐的数字
+ * @param {Number} length 总位数
+ * @return {String}
+ */
+utils.prefixInteger(num, length);
+```
+
+- 验证是否是函数
+
+``` javascript
+/**
+ * @param {Object} functionToCheck [description]
+ * @return {Boolean}
+ */
+utils.isFunction(functionToCheck);
+```
+
+- 监测屏幕是否横屏
+
+``` javascript
+/**
+ * @param  {Function} landscapeFunc 横屏回调函数
+ * @param  {Function} portraitFunc  竖屏回调函数
+ */
+utils.detectOrient(landscapeFunc, portraitFunc)
 ```
