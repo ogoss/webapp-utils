@@ -41,6 +41,7 @@ npm run dist
  */
 utils.ajax.get(url, data, type, callback, async);
 utils.ajax.post(url, data, type, callback, async);
+utils.ajax.jsonp(url, data, callback);
 ```
 
 - 获取手机操作系统

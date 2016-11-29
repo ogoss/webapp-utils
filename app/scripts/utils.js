@@ -81,6 +81,25 @@
       ajax.send(url, type, callback, 'POST', query.join('&'), async);
     };
 
+    ajax.jsonp = function(url, data, callback) {
+      var query = [];
+      for (var key in data) {
+        query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
+      }
+
+      var jsonpCallback = 'jsonp_' + new Date().getTime() + Math.round(Math.random() * 1000);
+      window[jsonpCallback] = function(res) {
+        delete window[jsonpCallback];
+        document.body.removeChild(scriptEl);
+
+        callback(res);
+      };
+
+      var scriptEl = document.createElement('script');
+      scriptEl.setAttribute('src', url + (query.length ? '?' + query.join('&') : '') + '&callback=' + jsonpCallback);
+      document.body.appendChild(scriptEl);
+    };
+
     return ajax;
   }
 
