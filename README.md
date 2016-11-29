@@ -2,6 +2,14 @@
 
 ## 使用方法
 ```
+/* 使用npm */
+npm install --save webapp-utils
+```
+```
+/* 使用bower */
+bower install --save webapp-utils
+```
+/* 网页直接调用 */
 <link rel="stylesheet" href="dist/orient.min.css">
 <script src="dist/utils.min.js"></script>
 ```
