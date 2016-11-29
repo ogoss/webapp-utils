@@ -21,7 +21,7 @@
    * 若未使用jQuery等库，可使用此AJAX实例
    * @return {Object} ajax实例
    */
-  utils.ajax = (function() {
+  function ajax() {
     var ajax = {};
     ajax.x = function() {
       if (typeof XMLHttpRequest !== 'undefined') {
@@ -82,13 +82,13 @@
     };
 
     return ajax;
-  })();
+  }
 
   /**
    * 获取手机操作系统
    * @returns {String}
    */
-  utils.getMobileOperatingSystem = function() {
+  function getMobileOperatingSystem() {
     var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
     // Windows Phone must come first because its UA also contains "Android"
@@ -106,22 +106,22 @@
     }
 
     return 'unknown';
-  };
+  }
 
   /**
    * 队列加载图片
-   * @param {Array} res 图片地址数组
+   * @param {Array} res 图片URL数组
    * @param {Number} [start=0] 起始值
    * @param {Number} [total=res.length] 总数
    * @param {Function} onLoadStart 加载开始回调函数
    * @param {Function} onLoading 加载中回调函数
    * @param {Function} onLoadEnd 加载结束回调函数
    */
-  utils.queue = function(res, start, total, onLoadStart, onLoading, onLoadEnd) {
+  function queue(res, start, total, onLoadStart, onLoading, onLoadEnd) {
     // 判断回调函数类型
-    var isFuncOnLoadStart = utils.isFunction(onLoadStart);
-    var isFuncOnLoadEnd = utils.isFunction(onLoadEnd);
-    var isFuncOnLoading = utils.isFunction(onLoading);
+    var isFuncOnLoadStart = isFunction(onLoadStart);
+    var isFuncOnLoadEnd = isFunction(onLoadEnd);
+    var isFuncOnLoading = isFunction(onLoading);
 
     // 设默认值
     start = start || 0;
@@ -187,7 +187,7 @@
       start++;
       loop(res, start, total, onLoadEnd, onLoading);
     }
-  };
+  }
 
   /**
    * 数字前补0
@@ -195,26 +195,26 @@
    * @param {Number} length 总位数
    * @return {String}
    */
-  utils.prefixInteger = function(num, length) {
+  function prefixInteger(num, length) {
     return (Array(length).join('0') + num).slice(-length);
-  };
+  }
 
   /**
    * 验证是否是函数
    * @param {Object} functionToCheck [description]
    * @return {Boolean}
    */
-  utils.isFunction = function(functionToCheck) {
+  function isFunction(functionToCheck) {
     var getType = {};
     return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
-  };
+  }
 
   /**
    * 监测屏幕是否横屏
    * @param  {Function} landscapeFunc 横屏回调函数
    * @param  {Function} portraitFunc  竖屏回调函数
    */
-  utils.detectOrient = function(landscapeFunc, portraitFunc) {
+  function detectOrient(landscapeFunc, portraitFunc) {
     var supportOrientation = (typeof window.orientation == 'number' && typeof window.onorientationchange == 'object');
 
     var updateOrientation = function() {
@@ -225,11 +225,11 @@
             case 90:
             case -90:
               orientation = 'block'; // 横屏
-              utils.isFunction(landscapeFunc) ? landscapeFunc() : '';
+              isFunction(landscapeFunc) ? landscapeFunc() : '';
               break;
             default:
               orientation = 'none'; // 竖屏
-              utils.isFunction(portraitFunc) ? portraitFunc() : '';
+              isFunction(portraitFunc) ? portraitFunc() : '';
           }
           document.getElementById('orientLayer').style.display = orientation;
         };
@@ -248,7 +248,38 @@
       window.setInterval(updateOrientation, 5000);
     }
     updateOrientation();
-  };
+  }
+
+  /**
+   * 获取url的参数值
+   * @param {String} strParamName 参数名
+   * @param {String} url url地址
+   * @return 参数值
+   */
+  function getURLParam(strParamName, url) {
+    var strReturn = '';
+    var strHref = url.toLowerCase();
+    if (strHref.indexOf('?') > -1) {
+      var strQueryString = strHref.substr(strHref.indexOf('?') + 1).toLowerCase();
+      var aQueryString = strQueryString.split('&');
+      for (var iParam = 0; iParam < aQueryString.length; iParam++) {
+        if (aQueryString[iParam].indexOf(strParamName.toLowerCase() + '=') > -1) {
+          var aParam = aQueryString[iParam].split('=');
+          strReturn = decodeURIComponent(aParam[1]);
+          break;
+        }
+      }
+    }
+    return strReturn;
+  }
+
+  utils.ajax = ajax();
+  utils.getMobileOperatingSystem = getMobileOperatingSystem;
+  utils.queue = queue;
+  utils.prefixInteger = prefixInteger;
+  utils.isFunction = isFunction;
+  utils.detectOrient = detectOrient;
+  utils.getURLParam = getURLParam;
 
   return utils;
 }));

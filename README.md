@@ -56,7 +56,7 @@ utils.getMobileOperatingSystem();
 
 ``` javascript
 /**
- * @param {Array} res 图片地址数组
+ * @param {Array} res 图片URL数组
  * @param {Number} [start=0] 起始值
  * @param {Number} [total=res.length] 总数
  * @param {Function} onLoadStart 加载开始回调函数
@@ -64,6 +64,12 @@ utils.getMobileOperatingSystem();
  * @param {Function} onLoadEnd 加载结束回调函数
  */
 utils.queue(res, start, total, onLoadStart, onLoading, onLoadEnd);
+/**
+ * 加载回调函数
+ */
+onLoadStart(res, start, total);
+onLoading(res, start, total);
+onLoadEnd(res, start, total);
 ```
 
 - 数字前补0
@@ -96,3 +102,13 @@ utils.isFunction(functionToCheck);
  */
 utils.detectOrient(landscapeFunc, portraitFunc)
 ```
+- 获取url的参数值
+
+``` javascript
+/**
+ * @param {String} strParamName 参数名
+ * @param {String} url url地址
+ * @return 参数值
+ */
+```
+utils.getURLParam(strParamName, url);
