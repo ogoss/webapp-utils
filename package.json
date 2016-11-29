@@ -2,7 +2,8 @@
   "name": "webapp-utils",
   "version": "1.0.0",
   "description": "common webapp utils",
-  "main": ["./app/scripts/uutils.js", "./app/styles/orient.css"],
+  "main": "./app/scripts/uutils.js",
+  "files": ["./app/scripts/uutils.js", "./app/styles/orient.css"],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
