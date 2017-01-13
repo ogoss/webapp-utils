@@ -1,7 +1,7 @@
 {
   "name": "webapp-utils",
   "description": "common webapp utils",
-  "main": ["./app/scripts/uutils.js", "./app/styles/orient.css"],
+  "main": ["./app/scripts/utils.js", "./app/styles/orient.css"],
   "authors": [
     "ogoss <343938328@qq.com>"
   ],
